@@ -1,0 +1,33 @@
+.header-btns {
+    display: flex;
+    gap: 1rem;
+}
+
+.arrow {
+    width: 30px;
+}
+
+.available-valutes {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 240px);
+    column-gap: 50px;
+    row-gap: 6px;
+    text-align: left;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    top: 220px;
+    padding: 20px 40px;
+    border-radius: 16px;
+}
+
+.available-valutes__item {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}

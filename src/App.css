@@ -1,0 +1,17 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.App-main {
+    display: flex;
+    align-items: center;
+    gap: 75px;
+}
+
+.exchange-arrow {
+    width: 70px;
+    cursor: pointer;
+}
