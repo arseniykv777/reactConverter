@@ -21,3 +21,19 @@ export async function getValutes() {
     console.error(error.message);
   }
 }
+
+export async function calcCourse(mainValute, value, secondValute){
+  try {
+    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+    const data = await response.json();
+
+    if (data) {
+      const value1 = data['Valute'][mainValute].Value * value;
+      const value2 = data['Valute'][secondValute].Value;
+      const result = value1 / value2;
+      return result.toFixed(4);
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+}
