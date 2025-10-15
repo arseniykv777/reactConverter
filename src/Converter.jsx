@@ -7,7 +7,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
   const [data, setData] = useState({});
   const [hiddenList, setHiddenList] = useState(true);
   const [inputValue, setInputValue] = useState(value);
-  const [activeValute, setActiveValute] = useState("RUB");
+  const [activeValute, setActiveValute] = useState(id === 1 ? 'RUB' : 'USD');
 
   useEffect(() => {
     const fetchValues = async() => {

@@ -22,6 +22,12 @@ export async function getValutes() {
   }
 }
 
+const checkOnlyZeros = (str) => {
+  const index = str.indexOf('.');
+  const dots = index !== -1 ? str.slice(index) : str;
+  return /^.0+$/.test(dots);
+}
+
 export async function calcCourse(mainValute, value, secondValute){
   try {
     const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
@@ -30,8 +36,12 @@ export async function calcCourse(mainValute, value, secondValute){
     if (data) {
       const value1 = data['Valute'][mainValute].Value * value;
       const value2 = data['Valute'][secondValute].Value;
-      const result = value1 / value2;
-      return result.toFixed(4);
+      let result = value1 / value2;
+      result = result.toFixed(4);
+      if (checkOnlyZeros(result)) {
+        return Math.trunc(Number(result))
+      }
+      return result;
     }
   } catch (err) {
     console.error(err.message);
