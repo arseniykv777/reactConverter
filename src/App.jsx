@@ -39,7 +39,7 @@ export default function App() {
       } else {
         const secondValute = id === 1 ? valutes[2] : valutes[1]
 
-        if ((valutes[id] === 'RUB') && (secondValute === 'RUB')) {
+        if ((valutes[id] === secondValute)) {
           id === 1 ? setValueSecond(value) : setValueFirst(value)
           setOutputValue({ value: value, id: id === 1 ? 2 : 1 })
           setSendValue({ value: value, id: id })
@@ -63,13 +63,14 @@ export default function App() {
     }
   }
 
+
   return (
     <>
       <header className="App-header">
         <h1>Конвертер валют</h1>
       </header>
       <main className="App-main">
-        <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter} calcValute={calcValute} value={valueFirst}/>
+        <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter} calcValute={calcValute} value={valueFirst}  />
         <img src='../public/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'}/>
         <Converter setList={setList} id={2} openList={openList} handleConverter={handleConverter} calcValute={calcValute} value={valueSecond}/>
       </main>

@@ -8,6 +8,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
   const [hiddenList, setHiddenList] = useState(true);
   const [inputValue, setInputValue] = useState(value);
   const [activeValute, setActiveValute] = useState(id === 1 ? 'RUB' : 'USD');
+  const [gbpValute, setGbpValute] = useState('GBP');
 
   useEffect(() => {
     const fetchValues = async() => {
@@ -49,11 +50,22 @@ export default function Converter({setList, id, openList, handleConverter, calcV
     setInputValue(value)
   }, [value])
 
+  const handleChangeGBP = (charcode) => {
+    const gbp = document.querySelector(`.valute-gbp${id}`);
+    gbp.textContent = charcode;
+    setGbpValute(charcode);
+    setList(id);
+    setHiddenList(prev => !prev);
+    handleActiveValute(charcode);
+  }
+
   return (
     <div className="converter">
       <div className="header-btns">
-        {['RUB', 'USD', 'EUR', 'GBP'].map((item) => (
-          <button key={item} onClick={() => handleActiveValute(item)} className={activeValute === item ? 'activeValute' : ''}>{item}</button>
+        {['RUB', 'USD', 'EUR', gbpValute].map((item) => (
+          <button key={item} onClick={() => handleActiveValute(item)} className={`${
+            item === gbpValute ? `valute-gbp${id}` : ''
+          } ${activeValute === item ? 'activeValute' : ''}`}>{item}</button>
         ))}
         <button onClick={() => {setList(id); setHiddenList(prev => !prev);}} className={'arrow'}>
           <img src="../public/arrow.png" alt="arrow" className={'arrow'}/>
@@ -61,7 +73,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
 
         <ul className={openList !== id ? 'available-valutes hidden' : 'available-valutes'} ref={divRef}>
           {Object.keys(data).map((valute) => (
-            <li key={data[valute].Name} className='available-valutes__item'>{data[valute].Name} <span>{data[valute].CharCode}</span></li>
+            <li key={data[valute].Name} className='available-valutes__item' onClick={() => handleChangeGBP(data[valute].CharCode)}>{data[valute].Name} <span>{data[valute].CharCode}</span></li>
           ))}
         </ul>
       </div>

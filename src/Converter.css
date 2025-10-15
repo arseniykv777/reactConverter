@@ -26,6 +26,17 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    transition: background-color .3s;
+    padding: 4px 4px;
+    border-radius: 4px;
+}
+
+.available-valutes__item span {
+    font-weight: 800;
+}
+
+.available-valutes__item:hover {
+    background-color: rgb(139, 139, 255);
 }
 
 .hidden {
