@@ -24,7 +24,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (!hiddenList  && !divRef.current.contains(e.target) && !e.target.className.includes('arrow')) {
+      if (!hiddenList && !divRef.current.contains(e.target) && !e.target.className.includes('arrow')) {
         setList(id);
         setHiddenList(prev => !prev);
       }
@@ -34,17 +34,11 @@ export default function Converter({setList, id, openList, handleConverter, calcV
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [hiddenList, id, setList]);
+  }, [hiddenList]);
 
   useEffect(() => {
-
-    const timer = setTimeout(() => {
-      calcValute(id, inputValue);
-    }, 500)
-
-    return () => clearTimeout(timer)
-
-  }, [inputValue])
+    calcValute(id, inputValue );
+  }, [inputValue]);
 
   const handleActiveValute = (valute) => {
     setActiveValute(valute);

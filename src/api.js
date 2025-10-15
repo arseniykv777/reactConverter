@@ -34,9 +34,20 @@ export async function calcCourse(mainValute, value, secondValute){
     const data = await response.json();
 
     if (data) {
-      const value1 = data['Valute'][mainValute].Value * value;
-      const value2 = data['Valute'][secondValute].Value;
-      let result = value1 / value2;
+      let result;
+      if (mainValute === 'RUB') {
+        const value2 = data['Valute'][secondValute].Value;
+        result = value / value2;
+      } else if (secondValute === 'RUB') {
+        const value2 = data['Valute'][mainValute].Value;
+        result = value2 * value;
+      }
+      else {
+        const value1 = data['Valute'][mainValute].Value * value;
+        const value2 = data['Valute'][secondValute].Value;
+        result = value1 / value2;
+      }
+
       result = result.toFixed(4);
       if (checkOnlyZeros(result)) {
         return Math.trunc(Number(result))

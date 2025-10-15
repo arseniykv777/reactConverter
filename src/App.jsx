@@ -1,7 +1,7 @@
 import './App.css'
 
 import Converter from "./Converter.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {calcCourse} from "./api.js";
 
 export default function App() {
@@ -21,30 +21,36 @@ export default function App() {
   const [sendValue, setSendValue] = useState({});
 
   const handleConverter = (valute, id) => {
-    setValutesConverters(prev => ({...prev, [id]: valute}));
-    setTimeout(() => {
-      if (id === sendValue.id) {
-        calcValute(id, sendValue.value, valute);
-      } else if (id === outputValue.id) {
-       calcValute(id, outputValue.value, valute);
-      }
-    }, 500);
-
+    setValutesConverters(prev => ({...prev, [id]: valute}))
   }
 
-  const calcValute = async (id, value, valute=undefined) => {
+  useEffect(() => {
+    if (!sendValue || !outputValue) return
+
+    const { id, value } = sendValue
+    const valute = valutesConverters[id]
+    calcValute(id, value, valute, valutesConverters)
+  }, [valutesConverters])
+
+  const calcValute = async (id, value, valute = undefined, valutes = valutesConverters) => {
     if (value !== 0) {
       if (block) {
         setBlock(false)
       } else {
-        let secondValute;
-        id === 1 ? secondValute = valutesConverters[2] : secondValute = valutesConverters[1]
+        const secondValute = id === 1 ? valutes[2] : valutes[1]
 
-        const calc = await calcCourse(valute ? valute: valutesConverters[id], value, secondValute);
-        id === 1 ? setValueSecond(calc) : setValueFirst(calc);
-        setOutputValue({value: calc, id: id === 1 ? 2 : 1});
-        setSendValue({value: value, id: id});
-        setBlock(true);
+        if ((valutes[id] === 'RUB') && (secondValute === 'RUB')) {
+          id === 1 ? setValueSecond(value) : setValueFirst(value)
+          setOutputValue({ value: value, id: id === 1 ? 2 : 1 })
+          setSendValue({ value: value, id: id })
+        } else {
+          const calc = await calcCourse(valute ?? valutes[id], value, secondValute)
+          id === 1 ? setValueSecond(calc) : setValueFirst(calc)
+          setOutputValue({ value: calc, id: id === 1 ? 2 : 1 })
+          setSendValue({ value: value, id: id })
+        }
+
+        setBlock(true)
       }
     }
   }
