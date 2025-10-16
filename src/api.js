@@ -5,15 +5,17 @@ export async function getValutes() {
     const data = await response.json();
     if (data) {
       for (const valute in data['Valute']) {
-        if (data['Valute'][valute].CharCode === 'XDR') {
+        const valuteCode = data['Valute'][valute];
+        if (valuteCode.CharCode === 'XDR' || valuteCode.CharCode === 'USD' || valuteCode.CharCode === 'EUR') {
           continue;
         }
         valutes[valute] = {
-          Name: data['Valute'][valute].Name,
-          Value: data['Valute'][valute].Value,
-          CharCode: data['Valute'][valute].CharCode,
+          Name: valuteCode.Name,
+          Value: valuteCode.Value,
+          CharCode: valuteCode.CharCode,
         }
       }
+      console.log(valutes);
       return valutes;
     }
     return null
