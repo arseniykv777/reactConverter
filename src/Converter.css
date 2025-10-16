@@ -10,7 +10,7 @@
 .available-valutes {
     list-style-type: none;
     display: grid;
-    grid-template-columns: repeat(3, 240px);
+    grid-template-columns: repeat(4, 240px);
     column-gap: 50px;
     row-gap: 6px;
     text-align: left;
@@ -76,6 +76,14 @@
 .valuteCourse {
     text-align: left;
     padding-inline: 1rem;
+}
+
+@media (max-width: 1300px) {
+    .available-valutes {
+        grid-template-columns: 240px;
+        height: 600px;
+        overflow-y: scroll;
+    }
 }
 
 @media (max-width: 1024px) {
