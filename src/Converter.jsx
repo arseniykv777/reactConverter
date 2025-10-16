@@ -20,7 +20,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
         console.log(error.message);
       }
     }
-
+    // noinspection JSIgnoredPromiseFromCall
     fetchValues();
   }, [])
 
@@ -40,11 +40,14 @@ export default function Converter({setList, id, openList, handleConverter, calcV
         document.removeEventListener('mousedown', handleClickOutside);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hiddenList]);
   
 
+
   useEffect(() => {
     calcValute(id, inputValue );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
   const handleActiveValute = (valute) => {
