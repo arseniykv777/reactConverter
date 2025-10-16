@@ -2,13 +2,22 @@ import {getValutes} from "./api.js";
 import {useEffect, useRef, useState} from "react";
 import './Converter.css'
 
-export default function Converter({setList, id, openList, handleConverter, calcValute, value}) {
+export default function Converter({setList, id, openList, handleConverter, calcValute, value, valute}) {
   const divRef = useRef(null);
   const [data, setData] = useState({});
   const [hiddenList, setHiddenList] = useState(true);
   const [inputValue, setInputValue] = useState(value);
-  const [activeValute, setActiveValute] = useState(id === 1 ? 'RUB' : 'USD');
+  const [activeValute, setActiveValute] = useState(valute);
   const [gbpValute, setGbpValute] = useState('GBP'); // выборочная валюта
+  const valutesBtns = ['RUB', 'USD', 'EUR', gbpValute];
+
+  useEffect(() => {
+    if (!valutesBtns.includes(valute)) {
+      setGbpValute(valute);
+    }
+    setActiveValute(valute);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valute])
 
   // получение списка валют 
   useEffect(() => {
@@ -75,7 +84,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
   return (
     <div className="converter">
       <div className="header-btns">
-        {['RUB', 'USD', 'EUR', gbpValute].map((item) => (
+        {valutesBtns.map((item) => (
           <button key={item} onClick={() => handleActiveValute(item)} className={`${
             item === gbpValute ? `valute-gbp${id}` : ''
           } ${activeValute === item ? 'activeValute' : ''}`}>{item}</button>

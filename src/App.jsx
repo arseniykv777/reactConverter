@@ -12,7 +12,7 @@ export function App() {
   const [valutesConverters, setValutesConverters] = useState({
     1: 'RUB',
     2: 'USD',
-    lastClickConvrt: ''
+    lastClickConvrt: 0
   });
 
   const [valueFirst, setValueFirst] = useState(0);
@@ -79,6 +79,12 @@ export function App() {
     }
   }
 
+  const changeValutesBetween = () => {
+    let key;
+    valutesConverters.lastClickConvrt === 1 ? key = 2 : key = 1
+    setValutesConverters({1: valutesConverters[2], 2: valutesConverters[1], lastClickConvrt: key})
+  }
+
 
   return (
     <>
@@ -87,10 +93,10 @@ export function App() {
       </header>
       <main className="App-main">
         <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter}
-                   calcValute={calcValute} value={valueFirst}/>
-        <img src='../public/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'}/>
+                   calcValute={calcValute} value={valueFirst} valute={valutesConverters[1]}/>
+        <img src='../public/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'} onClick={changeValutesBetween}/>
         <Converter setList={setList} id={2} openList={openList} handleConverter={handleConverter}
-                   calcValute={calcValute} value={valueSecond}/>
+                   calcValute={calcValute} value={valueSecond} valute={valutesConverters[2]}/>
       </main>
     </>
   )
