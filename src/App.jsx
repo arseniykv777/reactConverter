@@ -121,7 +121,7 @@ export function App() {
           <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter}
                      calcValute={calcValute} value={valueFirst} valute={valutesConverters[1]} valuteCourse={valutesCourse[1]}/>
         </div>
-        <img src='../public/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'} onClick={changeValutesBetween}/>
+        <img src='../icons/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'} onClick={changeValutesBetween}/>
         <div>
           <p className={'pre-converter'}>Хочу приобрести</p>
           <Converter setList={setList} id={2} openList={openList} handleConverter={handleConverter}

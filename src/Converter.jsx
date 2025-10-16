@@ -90,7 +90,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
           } ${activeValute === item ? 'activeValute' : ''}`}>{item}</button>
         ))}
         <button onClick={() => {setList(id); setHiddenList(prev => !prev);}} className={'arrow'}>
-          <img src="../public/arrow.png" alt="arrow" className={'arrow'}/>
+          <img src="../icons/arrow.png" alt="arrow" className={'arrow'}/>
         </button>
 
         <ul className={openList !== id ? 'available-valutes hidden' : 'available-valutes'} ref={divRef}>
