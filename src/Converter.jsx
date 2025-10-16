@@ -26,17 +26,20 @@ export default function Converter({setList, id, openList, handleConverter, calcV
 
   // скрытие списка валют 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!hiddenList && !divRef.current.contains(e.target) && !e.target.className.includes('arrow')) {
-        setList(id);
-        setHiddenList(prev => !prev);
+    if (!hiddenList) {
+      const handleClickOutside = (e) => {
+        if (!hiddenList && !divRef.current.contains(e.target) && !e.target.className.includes('arrow')) {
+          setList(id);
+          setHiddenList(prev => !prev);
+        }
+      }
+      
+      document.addEventListener('mousedown', handleClickOutside);
+      
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
       }
     }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
   }, [hiddenList]);
   
 
