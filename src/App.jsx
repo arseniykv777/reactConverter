@@ -2,7 +2,7 @@ import './App.css'
 
 import Converter from "./Converter.jsx";
 import {useEffect, useState} from "react";
-import {calcCourse} from "./api.js";
+import {calcCourse, getValuteCourse} from "./api.js";
 
 export function App() {
   // 0 - никакой список не открыт
@@ -20,6 +20,10 @@ export function App() {
   const [block, setBlock] = useState(false) // чтобы пересчет не вызывался второй раз
   const [outputValue, setOutputValue] = useState({});
   const [sendValue, setSendValue] = useState({});
+  const [valutesCourse, setValutesCourse] = useState({
+    1: '',
+    2: ''
+  });
 
   const handleConverter = (valute, id) => {
     // noinspection JSCheckFunctionSignatures
@@ -32,6 +36,26 @@ export function App() {
 
 
   useEffect(() => {
+    const valutesCourse = async() => {
+      if (valutesConverters[1] === valutesConverters[2]) {
+        return 'RUB';
+      }
+      return await getValuteCourse(valutesConverters[1], valutesConverters[2])
+    }
+
+    valutesCourse().then((result) => {
+      if (result === 'RUB') {
+        setValutesCourse({
+          1: `1 RUB = 1 RUB`,
+          2: `1 RUB = 1 RUB`,
+        })
+      } else {
+        setValutesCourse({
+          1: `1 ${valutesConverters[1]} = ${result[0]} ${valutesConverters[2]}`,
+          2: `1 ${valutesConverters[2]} = ${result[1]} ${valutesConverters[1]}`,
+        })
+      }
+    });
     if (!sendValue || !outputValue) return
 
     let value;
@@ -92,11 +116,17 @@ export function App() {
         <h1>Конвертер валют</h1>
       </header>
       <main className="App-main">
-        <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter}
-                   calcValute={calcValute} value={valueFirst} valute={valutesConverters[1]}/>
+        <div>
+          <p className={'pre-converter'}>У меня есть</p>
+          <Converter setList={setList} id={1} openList={openList} handleConverter={handleConverter}
+                     calcValute={calcValute} value={valueFirst} valute={valutesConverters[1]} valuteCourse={valutesCourse[1]}/>
+        </div>
         <img src='../public/exchange_arrow.png' alt='exchange arrow' className={'exchange-arrow'} onClick={changeValutesBetween}/>
-        <Converter setList={setList} id={2} openList={openList} handleConverter={handleConverter}
-                   calcValute={calcValute} value={valueSecond} valute={valutesConverters[2]}/>
+        <div>
+          <p className={'pre-converter'}>Хочу приобрести</p>
+          <Converter setList={setList} id={2} openList={openList} handleConverter={handleConverter}
+                     calcValute={calcValute} value={valueSecond} valute={valutesConverters[2]} valuteCourse={valutesCourse[2]}/>
+        </div>
       </main>
     </>
   )

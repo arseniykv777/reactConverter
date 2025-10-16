@@ -17,7 +17,7 @@
     position: absolute;
     background-color: #fff;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    top: 220px;
+    top: 260px;
     padding: 20px 40px;
     border-radius: 4px;
 }
@@ -43,10 +43,14 @@
     display: none;
 }
 
+.converter {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 
 .input-box {
-    width: 430px;
-    margin-top: 2rem;
+    max-width: 430px;
     height: 150px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -60,11 +64,30 @@
     outline: none;
     font-weight: 800;
     font-size: 44px;
-    padding-inline: 10px;
     line-height: normal;
+    padding-inline: 1rem;
 }
 
 .activeValute {
     outline: none;
     background-color: rgb(139, 139, 255);
+}
+
+.valuteCourse {
+    text-align: left;
+    padding-inline: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .pre-converter {
+        display: none;
+    }
+
+    .converter {
+        gap: 1rem;
+    }
+
+    .secondConverter {
+        flex-direction: column-reverse;
+    }
 }

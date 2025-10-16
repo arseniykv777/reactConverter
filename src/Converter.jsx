@@ -2,7 +2,7 @@ import {getValutes} from "./api.js";
 import {useEffect, useRef, useState} from "react";
 import './Converter.css'
 
-export default function Converter({setList, id, openList, handleConverter, calcValute, value, valute}) {
+export default function Converter({setList, id, openList, handleConverter, calcValute, value, valute, valuteCourse}) {
   const divRef = useRef(null);
   const [data, setData] = useState({});
   const [hiddenList, setHiddenList] = useState(true);
@@ -82,7 +82,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
   }
 
   return (
-    <div className="converter">
+    <div className={id === 2 ? 'converter secondConverter' : 'converter'}>
       <div className="header-btns">
         {valutesBtns.map((item) => (
           <button key={item} onClick={() => handleActiveValute(item)} className={`${
@@ -102,6 +102,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
 
       <div className="input-box">
         <input type="text" className={'input-valute'} onChange={(e) => setInputValue(e.target.value)} value={inputValue} />
+        <p className={'valuteCourse'}>{valuteCourse}</p>
       </div>
     </div>
   )

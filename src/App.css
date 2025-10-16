@@ -15,3 +15,21 @@
     width: 70px;
     cursor: pointer;
 }
+
+.pre-converter {
+    text-align: left;
+    color: #676b6e;
+}
+
+
+@media (max-width: 1024px) {
+    .App-main {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .exchange-arrow {
+        display: none;
+    }
+
+}
