@@ -8,8 +8,9 @@ export default function Converter({setList, id, openList, handleConverter, calcV
   const [hiddenList, setHiddenList] = useState(true);
   const [inputValue, setInputValue] = useState(value);
   const [activeValute, setActiveValute] = useState(id === 1 ? 'RUB' : 'USD');
-  const [gbpValute, setGbpValute] = useState('GBP');
+  const [gbpValute, setGbpValute] = useState('GBP'); // выборочная валюта
 
+  // получение списка валют 
   useEffect(() => {
     const fetchValues = async() => {
       try {
@@ -23,6 +24,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
     fetchValues();
   }, [])
 
+  // скрытие списка валют 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!hiddenList && !divRef.current.contains(e.target) && !e.target.className.includes('arrow')) {
@@ -36,6 +38,7 @@ export default function Converter({setList, id, openList, handleConverter, calcV
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [hiddenList]);
+  
 
   useEffect(() => {
     calcValute(id, inputValue );
@@ -45,10 +48,14 @@ export default function Converter({setList, id, openList, handleConverter, calcV
     setActiveValute(valute);
     handleConverter(valute, id);
   }
-
+  
+  
+  // вывод вычисления 
   useEffect(() => {
     setInputValue(value)
   }, [value])
+
+
 
   const handleChangeGBP = (charcode) => {
     const gbp = document.querySelector(`.valute-gbp${id}`);
