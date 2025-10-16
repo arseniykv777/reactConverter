@@ -31,13 +31,13 @@ export default function App() {
     const id = valutesConverters.lastClickConvrt;
     const valute = valutesConverters[id];
     
-    const value;
+    let value;
     if (sendValue.id === id) {
       value = sendValue.value;
     } else {
       value = outputValue.value;
     }
-    calcValute(id, value, valutes)
+    calcValute(id, value, valute)
   }, [valutesConverters])
 
   const calcValute = async (id, value, valute = undefined, valutes = valutesConverters) => {
