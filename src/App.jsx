@@ -12,6 +12,7 @@ export default function App() {
   const [valutesConverters, setValutesConverters] = useState({
     1: 'RUB',
     2: 'USD',
+    lastClickConvrt: null
   });
 
   const [valueFirst, setValueFirst] = useState(0);
@@ -21,15 +22,22 @@ export default function App() {
   const [sendValue, setSendValue] = useState({});
 
   const handleConverter = (valute, id) => {
-    setValutesConverters(prev => ({...prev, [id]: valute}))
+    setValutesConverters(prev => ({...prev, [id]: valute, lastClickConvrt: id}))
   }
 
   useEffect(() => {
     if (!sendValue || !outputValue) return
 
-    const { id, value } = sendValue
-    const valute = valutesConverters[id]
-    calcValute(id, value, valute, valutesConverters)
+    const id = valutesConverters.lastClickConvrt;
+    const valute = valutesConverters[id];
+    
+    const value;
+    if (sendValue.id === id) {
+      value = sendValue.value;
+    } else {
+      value = outputValue.value;
+    }
+    calcValute(id, value, valutes)
   }, [valutesConverters])
 
   const calcValute = async (id, value, valute = undefined, valutes = valutesConverters) => {
