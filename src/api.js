@@ -15,7 +15,6 @@ export async function getValutes() {
           CharCode: valuteCode.CharCode,
         }
       }
-      console.log(valutes);
       return valutes;
     }
     return null
