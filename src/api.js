@@ -1,8 +1,10 @@
+let data = null;
+
 export async function getValutes() {
   let valutes = {};
   try {
     const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
-    const data = await response.json();
+    data = await response.json();
     if (data) {
       for (const valute in data['Valute']) {
         const valuteCode = data['Valute'][valute];
@@ -31,9 +33,6 @@ const checkOnlyZeros = (str) => {
 
 export async function calcCourse(mainValute, value, secondValute){
   try {
-    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
-    const data = await response.json();
-
     if (data) {
       let result;
       if (mainValute === 'RUB') {
@@ -62,11 +61,7 @@ export async function calcCourse(mainValute, value, secondValute){
 
 export async function getValuteCourse(mainValute, secondValute) {
   try {
-    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
-    const data = await response.json();
-
     if (data) {
-
       if (mainValute === 'RUB' || secondValute === 'RUB') {
         let oppositeValute;
         mainValute === 'RUB' ? oppositeValute = secondValute : oppositeValute = mainValute;
